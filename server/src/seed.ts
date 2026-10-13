@@ -42,7 +42,7 @@ export async function seedDatabase(): Promise<void> {
           defaultTesterValueUnit: '',
         },
       });
-    } else if (primaryOrg.name && primaryOrg.name.toLowerCase().includes('nagesh')) {
+    } else if (primaryOrg.name !== 'Aurum Touch Lab') {
       primaryOrg.name = 'Aurum Touch Lab';
       await primaryOrg.save();
     }

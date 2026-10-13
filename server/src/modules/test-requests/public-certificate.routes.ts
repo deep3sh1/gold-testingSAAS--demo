@@ -45,7 +45,7 @@ router.get(['/:id.pdf', '/:id-print.pdf'], async (req: Request, res: Response) =
     const filenameSuffix = !includeHeader ? '_StationerySlip' : '';
     res.setHeader(
       'Content-Disposition',
-      `${dispositionType}; filename="GoldScope_Assay_${doc.tokenNumber}${filenameSuffix}.pdf"`
+      `${dispositionType}; filename="Aurum_Assay_${doc.tokenNumber}${filenameSuffix}.pdf"`
     );
     res.setHeader('Content-Length', pdfBuffer.length);
     res.send(pdfBuffer);
