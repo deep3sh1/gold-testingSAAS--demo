@@ -6,32 +6,16 @@ export class Msg91WhatsAppProvider implements IWhatsAppProvider {
 
   async sendMessage(payload: WhatsAppSendMessagePayload): Promise<WhatsAppSendResult> {
     const authKey = config.whatsapp.msg91?.authKey || process.env.MSG91_AUTHKEY;
-    const rawIntegrated = config.whatsapp.msg91?.integratedNumber || process.env.MSG91_INTEGRATED_NUMBER;
-    const defaultIntegrated = (!rawIntegrated || rawIntegrated === '15553605603') ? '919653442477' : rawIntegrated;
-    const kalyanWestIntegrated = (config.whatsapp.msg91 as any)?.kalyanWestIntegratedNumber || process.env.MSG91_KALYAN_WEST_NUMBER || '919326883179';
-    const dombivliIntegrated = (config.whatsapp.msg91 as any)?.dombivliIntegratedNumber || process.env.MSG91_DOMBIVLI_NUMBER || '918369772543';
-
-    // Route sender by branch:
-    // - Kalyan West -> 919326883179
-    // - Dombivli East -> 918369772543
-    // - Other branches -> default (919653442477)
-    let integratedNumber = defaultIntegrated;
-    if (payload.senderNumber) {
-      integratedNumber = payload.senderNumber;
-    } else if (payload.branch) {
-      const b = payload.branch.toLowerCase().trim();
-      if (b === 'kalyan' || b === 'kalyan_west' || b === 'kalyanwest' || (b.includes('kalyan') && !b.includes('east'))) {
-        integratedNumber = kalyanWestIntegrated;
-      } else if (b.includes('dombivli') || b.includes('dombivali')) {
-        integratedNumber = dombivliIntegrated;
-      }
-    }
-    const templateName = config.whatsapp.msg91?.templateName || 'demo_report';
+    const integratedNumber = payload.senderNumber || config.whatsapp.msg91?.integratedNumber || process.env.MSG91_INTEGRATED_NUMBER || '919820012340';
+    const templateName = config.whatsapp.msg91?.templateName || process.env.MSG91_TEMPLATE_NAME || 'demo_report';
+    const templateNamespace = config.whatsapp.msg91?.templateNamespace || process.env.MSG91_TEMPLATE_NAMESPACE || '';
 
     if (!authKey) {
+      console.log(`[MSG91 WhatsApp (Mock)] Demo mode active. Message to ${payload.to} logged.`);
       return {
-        success: false,
-        error: 'MSG91 AuthKey not configured (MSG91_AUTHKEY missing in .env)',
+        success: true,
+        providerMessageId: `mock_msg91_${Date.now()}`,
+        rawResponse: { status: 'mock_delivered' },
       };
     }
 
@@ -51,20 +35,11 @@ export class Msg91WhatsAppProvider implements IWhatsAppProvider {
       };
     }
 
-    let activeTemplateName = config.whatsapp.msg91?.templateName || 'demo_report';
-    let templateNamespace = config.whatsapp.msg91?.templateNamespace || process.env.MSG91_TEMPLATE_NAMESPACE || 'ba234d2d_ca5e_41e2_bef3_752ac50e31d4';
-
-    if (integratedNumber === kalyanWestIntegrated) {
-      activeTemplateName = process.env.MSG91_KALYAN_WEST_TEMPLATE || 'demo_report';
-      templateNamespace = process.env.MSG91_KALYAN_WEST_NAMESPACE || '66b066dd_3e21_4240_87b8_7ee518e5ee49';
-    } else if (integratedNumber === dombivliIntegrated) {
-      activeTemplateName = process.env.MSG91_DOMBIVLI_TEMPLATE || 'demo_report';
-      templateNamespace = process.env.MSG91_DOMBIVLI_NAMESPACE || '4cbe5928_584e_4f8a_8a07_25b34ca66f53';
-    }
+    let activeTemplateName = templateName;
 
     // 2. Body parameters for approved WhatsApp templates
     if (payload.parameters && Object.keys(payload.parameters).length > 0) {
-      if (activeTemplateName === 'demo_report' || activeTemplateName === 'nagesh' || activeTemplateName === 'nagesh_report' || activeTemplateName === 'nagesh_touch_lab') {
+      if (activeTemplateName === 'demo_report') {
         // positional parameters:
         // body_1: Customer Name
         // body_2: Token

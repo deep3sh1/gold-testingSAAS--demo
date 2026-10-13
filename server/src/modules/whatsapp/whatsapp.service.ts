@@ -11,12 +11,11 @@ export class WhatsAppService {
     if (provider) {
       this.provider = provider;
     } else {
-      if (process.env.NODE_ENV === 'test') {
-        this.provider = new MockWhatsAppProvider();
-      } else if (config.whatsapp.provider === 'msg91') {
-        this.provider = new Msg91WhatsAppProvider();
-      } else if (config.whatsapp.provider === 'cloud_api') {
+      // Default strictly to MockWhatsAppProvider for safe isolated demo mode
+      if (config.whatsapp.provider === 'cloud_api' && config.whatsapp.accessToken) {
         this.provider = new MetaCloudApiWhatsAppProvider();
+      } else if (config.whatsapp.provider === 'msg91' && config.whatsapp.msg91?.authKey) {
+        this.provider = new Msg91WhatsAppProvider();
       } else {
         this.provider = new MockWhatsAppProvider();
       }
@@ -48,7 +47,7 @@ export class WhatsAppService {
   }): Promise<WhatsAppSendResult> {
     const valueStr = params.testerValueUnit ? `${params.testerValue} ${params.testerValueUnit}` : `${params.testerValue}`;
     const karatStr = params.karat ? ` (${params.karat.toFixed(2)}K)` : '';
-    const fallbackText = `Hello ${params.customerName},\n\nYour gold testing request ${params.tokenNumber} has been completed.\nItem: ${params.item} (${params.weight} ${params.weightUnit})\nGold Purity: ${valueStr}${karatStr}\n\nView/Download Certificate:\n${params.documentUrl || ''}\n\nThank you for choosing GOLDSCOPE ASSAY.`;
+    const fallbackText = `Hello ${params.customerName},\n\nYour gold testing request ${params.tokenNumber} has been completed.\nItem: ${params.item} (${params.weight} ${params.weightUnit})\nGold Purity: ${valueStr}${karatStr}\n\nView/Download Certificate:\n${params.documentUrl || ''}\n\nThank you for choosing Aurum Touch Lab.`;
 
     const payload: WhatsAppSendMessagePayload = {
       to: params.to,
