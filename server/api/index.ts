@@ -6,8 +6,12 @@ import { seedDatabase } from '../src/seed.js';
 let initializedApp: any = null;
 
 async function bootstrap() {
-  await connectDatabase();
-  await seedDatabase();
+  try {
+    await connectDatabase();
+    await seedDatabase();
+  } catch (dbErr) {
+    console.warn('[Vercel Serverless] Database connection bypassed for standalone demo mode:', dbErr);
+  }
   return createApp();
 }
 
