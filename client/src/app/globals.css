@@ -71,6 +71,20 @@ body {
   background: rgba(212, 175, 55, 0.6);
 }
 
+/* Hide scrollbar utility for smooth horizontal touch chips */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Touch & tap ergonomics */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
 /* Prevent browser from forcing white background on inputs */
 input:-webkit-autofill,
 input:-webkit-autofill:hover, 

@@ -425,6 +425,41 @@ export function renderAssayCertificateHtml(
       font-weight: 800;
     }
 
+    /* Mobile Screen Responsive Rules */
+    @media screen and (max-width: 820px) {
+      body {
+        padding: 8px !important;
+        min-height: 100vh !important;
+        justify-content: flex-start !important;
+      }
+      .cert-page {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-height: auto !important;
+        padding: ${isPreprintedDefault ? '0 16px 14px 16px' : '10px 14px 14px 14px'} !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+      }
+      .print-controls-bar {
+        width: 100% !important;
+        max-width: 100% !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 8px !important;
+      }
+      .btn-container {
+        flex-direction: column !important;
+        width: 100% !important;
+      }
+      .action-btn {
+        width: 100% !important;
+        justify-content: center !important;
+      }
+      .print-guidance-banner {
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+    }
+
     /* Print Styles */
     @media print {
       * {

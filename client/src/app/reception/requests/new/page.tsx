@@ -159,7 +159,7 @@ export default function NewTestRequestPage() {
       </div>
 
       {/* Main Reception Form Card */}
-      <div className="glass-panel-glow rounded-2xl p-6 sm:p-8 border border-gold-500/30 shadow-2xl relative">
+      <div className="glass-panel-glow rounded-2xl sm:rounded-3xl p-4 sm:p-8 border border-gold-500/30 shadow-2xl relative">
         {errorMessage && (
           <div className="mb-6 p-4 rounded-xl bg-red-500/15 border border-red-500/30 text-red-300 text-sm flex items-center justify-between">
             <span>{errorMessage}</span>
@@ -169,7 +169,7 @@ export default function NewTestRequestPage() {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
           {/* Top Row: Business Date & Admin Branch Selection */}
           <div className={`grid gap-4 ${isAdmin ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-1'}`}>
             <div>
@@ -306,6 +306,7 @@ export default function NewTestRequestPage() {
             <div className="relative">
               <input
                 type="tel"
+                inputMode="tel"
                 required
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
@@ -343,11 +344,11 @@ export default function NewTestRequestPage() {
                 <span>Metal Type</span>
                 <span className="text-[10px] font-mono text-gold-400/80 font-normal">Select One</span>
               </label>
-              <div className="grid grid-cols-2 gap-2 h-[42px]">
+              <div className="grid grid-cols-2 gap-2 min-h-[44px]">
                 {/* Gold Checkbox */}
                 <label
                   onClick={() => setMetalType('GOLD')}
-                  className={`flex items-center justify-center space-x-2 px-2.5 py-2 rounded-xl border cursor-pointer select-none transition ${
+                  className={`flex items-center justify-center space-x-2 px-2.5 py-2.5 rounded-xl border cursor-pointer select-none transition ${
                     metalType === 'GOLD'
                       ? 'bg-amber-500/15 border-amber-400 text-amber-300 shadow-sm shadow-amber-500/20 ring-1 ring-amber-400/50'
                       : 'bg-obsidian-900/80 border-slate-700 text-slate-400 hover:border-slate-600 hover:text-slate-300'
@@ -365,7 +366,7 @@ export default function NewTestRequestPage() {
                 {/* Silver Checkbox */}
                 <label
                   onClick={() => setMetalType('SILVER')}
-                  className={`flex items-center justify-center space-x-2 px-2.5 py-2 rounded-xl border cursor-pointer select-none transition ${
+                  className={`flex items-center justify-center space-x-2 px-2.5 py-2.5 rounded-xl border cursor-pointer select-none transition ${
                     metalType === 'SILVER'
                       ? 'bg-slate-700/50 border-slate-200 text-slate-100 shadow-sm ring-1 ring-slate-300/50'
                       : 'bg-obsidian-900/80 border-slate-700 text-slate-400 hover:border-slate-600 hover:text-slate-300'
@@ -392,6 +393,7 @@ export default function NewTestRequestPage() {
             <div className="flex space-x-2">
               <input
                 type="number"
+                inputMode="decimal"
                 step="0.001"
                 min="0.001"
                 required
@@ -416,7 +418,7 @@ export default function NewTestRequestPage() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full py-3.5 px-4 gold-button rounded-xl text-sm font-semibold flex items-center justify-center space-x-2 shadow-lg disabled:opacity-50 mt-4"
+            className="w-full py-3.5 px-4 gold-button rounded-xl text-sm font-semibold flex items-center justify-center space-x-2 shadow-lg disabled:opacity-50 mt-4 active:scale-95 transition"
           >
             <span>{isSubmitting ? 'Generating Token...' : 'Create Testing Request'}</span>
             <ArrowRight className="w-4 h-4" />
@@ -426,17 +428,17 @@ export default function NewTestRequestPage() {
 
       {/* Generated Token Success Modal */}
       {createdRequest && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
-          <div className="glass-panel-glow rounded-3xl p-8 max-w-md w-full border-2 border-gold-400 shadow-2xl text-center space-y-6">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-gold-400 via-gold-500 to-gold-700 flex items-center justify-center mx-auto shadow-xl shadow-gold-500/30">
-              <CheckCircle className="w-9 h-9 text-obsidian-900" />
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
+          <div className="glass-panel-glow rounded-2xl sm:rounded-3xl p-5 sm:p-8 max-w-md w-full border-2 border-gold-400 shadow-2xl text-center space-y-5 sm:space-y-6">
+            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-gold-400 via-gold-500 to-gold-700 flex items-center justify-center mx-auto shadow-xl shadow-gold-500/30">
+              <CheckCircle className="w-8 h-8 sm:w-9 sm:h-9 text-obsidian-900" />
             </div>
 
             <div>
               <p className="text-xs font-mono font-bold text-gold-400 uppercase tracking-widest">
                 Testing Request Created
               </p>
-              <h2 className="text-3xl font-black font-mono gold-gradient-text tracking-wider mt-1">
+              <h2 className="text-2xl sm:text-3xl font-black font-mono gold-gradient-text tracking-wider mt-1">
                 {createdRequest.tokenNumber}
               </h2>
             </div>

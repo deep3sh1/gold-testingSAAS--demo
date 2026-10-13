@@ -88,7 +88,7 @@ export default function CustomersPage() {
 
         <button
           onClick={() => setShowAddModal(true)}
-          className="py-2.5 px-4 gold-button rounded-xl text-sm font-semibold flex items-center space-x-2 shadow-lg self-start sm:self-auto"
+          className="w-full sm:w-auto py-2.5 px-4 gold-button rounded-xl text-sm font-semibold flex items-center justify-center space-x-2 shadow-lg active:scale-95 transition"
         >
           <Plus className="w-4 h-4" />
           <span>Add Customer</span>
@@ -96,21 +96,21 @@ export default function CustomersPage() {
       </div>
 
       {/* Search Toolbar */}
-      <div className="glass-panel p-4 rounded-2xl border border-slate-800 flex items-center justify-between">
-        <div className="relative w-full sm:w-96">
+      <div className="glass-panel p-3.5 sm:p-4 rounded-xl sm:rounded-2xl border border-slate-800 flex items-center justify-between gap-2.5">
+        <div className="relative flex-1 sm:w-96 sm:flex-initial">
           <Search className="w-4 h-4 absolute left-3.5 top-3 text-slate-500" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search by Jeweller Name or Phone..."
+            placeholder="Search Jeweller Name or Phone..."
             className="w-full bg-obsidian-900 border border-slate-700 rounded-xl pl-10 pr-4 py-2 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-gold-400"
           />
         </div>
 
         <button
           onClick={fetchCustomers}
-          className="p-2 rounded-xl bg-obsidian-850 hover:bg-slate-800 text-slate-300 border border-slate-700 transition"
+          className="p-2 rounded-xl bg-obsidian-850 hover:bg-slate-800 text-slate-300 border border-slate-700 transition shrink-0"
         >
           <RefreshCw className="w-4 h-4" />
         </button>
@@ -166,9 +166,9 @@ export default function CustomersPage() {
 
       {/* Add Customer Modal */}
       {showAddModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-          <div className="glass-panel-glow rounded-3xl p-6 sm:p-8 max-w-md w-full border border-gold-500/30 shadow-2xl">
-            <h2 className="text-xl font-bold text-slate-100 mb-4 flex items-center space-x-2">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
+          <div className="glass-panel-glow rounded-2xl sm:rounded-3xl p-5 sm:p-8 max-w-md w-full border border-gold-500/30 shadow-2xl">
+            <h2 className="text-lg sm:text-xl font-bold text-slate-100 mb-4 flex items-center space-x-2">
               <Building2 className="w-5 h-5 text-gold-400" />
               <span>Register New Customer / M/s</span>
             </h2>
@@ -200,6 +200,7 @@ export default function CustomersPage() {
                 </label>
                 <input
                   type="tel"
+                  inputMode="tel"
                   required
                   value={newPhone}
                   onChange={(e) => setNewPhone(e.target.value)}

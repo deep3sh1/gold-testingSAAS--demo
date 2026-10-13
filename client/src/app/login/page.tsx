@@ -198,30 +198,30 @@ export default function LoginPage() {
     <div className="min-h-[85vh] flex items-center justify-center py-10 px-4">
       <div className="w-full max-w-lg">
         {/* Brand Header */}
-        <div className="text-center mb-8">
-          <div className="inline-flex w-20 h-20 rounded-2xl bg-white p-2.5 items-center justify-center shadow-2xl shadow-gold-500/20 mb-4 ring-2 ring-gold-400/50 hover:scale-105 transition-transform">
+        <div className="text-center mb-6 sm:mb-8">
+          <div className="inline-flex w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white p-2 sm:p-2.5 items-center justify-center shadow-2xl shadow-gold-500/20 mb-3 sm:mb-4 ring-2 ring-gold-400/50 hover:scale-105 transition-transform">
             <img
               src="/images/client-logo.jpeg"
               alt="Aurum Touch Lab Logo"
               className="w-full h-full object-contain"
             />
           </div>
-          <h1 className="text-3xl font-extrabold tracking-tight gold-gradient-text font-mono">
+          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight gold-gradient-text font-mono">
             AURUM TOUCH LAB
           </h1>
-          <p className="text-sm text-slate-400 mt-1 font-medium">
+          <p className="text-xs sm:text-sm text-slate-400 mt-1 font-medium">
             Precious Metals Testing &amp; Hallmark SaaS Platform
           </p>
         </div>
 
         {/* Main Terminal Card */}
-        <div className="glass-panel-glow rounded-3xl p-6 sm:p-8 border border-gold-500/30 shadow-2xl relative overflow-hidden">
+        <div className="glass-panel-glow rounded-2xl sm:rounded-3xl p-4 sm:p-8 border border-gold-500/30 shadow-2xl relative overflow-hidden">
           {/* Terminal Selection Header */}
-          <div className="mb-5">
-            <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2.5">
+          <div className="mb-4 sm:mb-5">
+            <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
               Select Terminal to Access
             </label>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
               {(Object.keys(TERMINALS) as TerminalRole[]).map((role) => {
                 const term = TERMINALS[role];
                 const Icon = term.icon;
@@ -232,21 +232,21 @@ export default function LoginPage() {
                     key={role}
                     type="button"
                     onClick={() => handleSelectTerminal(role)}
-                    className={`py-3 px-2 rounded-xl border text-center transition-all duration-150 flex flex-col items-center justify-center space-y-1.5 cursor-pointer ${
+                    className={`py-2.5 sm:py-3 px-1 sm:px-2 rounded-xl border text-center transition-all duration-150 flex flex-col items-center justify-center space-y-1 sm:space-y-1.5 cursor-pointer active:scale-95 ${
                       isSelected
                         ? 'bg-slate-800/90 border-gold-400/80 shadow-lg shadow-gold-500/10 ring-1 ring-gold-400/40'
                         : 'bg-obsidian-850/80 hover:bg-slate-800/50 border-slate-700/80 hover:border-slate-600 text-slate-400'
                     }`}
                   >
                     <div
-                      className={`w-7 h-7 rounded-lg flex items-center justify-center ${
+                      className={`w-6 h-6 sm:w-7 sm:h-7 rounded-lg flex items-center justify-center ${
                         isSelected ? term.accentColor : 'text-slate-400 bg-slate-800/50'
                       }`}
                     >
-                      <Icon className="w-4 h-4" />
+                      <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                     </div>
                     <span
-                      className={`text-xs font-bold leading-tight ${
+                      className={`text-[11px] sm:text-xs font-bold leading-tight ${
                         isSelected ? 'text-slate-100' : 'text-slate-400'
                       }`}
                     >

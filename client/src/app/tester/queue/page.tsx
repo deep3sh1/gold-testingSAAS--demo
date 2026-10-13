@@ -284,7 +284,7 @@ export default function TesterQueuePage() {
       )}
 
       {/* Filter Bar */}
-      <div className="glass-panel p-4 rounded-2xl border border-slate-800 flex flex-col md:flex-row gap-4 items-stretch md:items-center justify-between">
+      <div className="glass-panel p-3.5 sm:p-4 rounded-xl sm:rounded-2xl border border-slate-800 flex flex-col md:flex-row gap-3 sm:gap-4 items-stretch md:items-center justify-between">
         {/* Search */}
         <div className="relative flex-1">
           <Search className="w-4 h-4 absolute left-3.5 top-3 text-slate-500" />
@@ -297,69 +297,72 @@ export default function TesterQueuePage() {
           />
         </div>
 
-        {/* Date Filter with Today / All Dates shortcuts */}
-        <div className="flex items-center space-x-2">
-          <div className="flex items-center bg-obsidian-900 border border-slate-700 rounded-xl px-2.5 py-1.5 space-x-2">
-            <Calendar className="w-4 h-4 text-gold-400 shrink-0" />
-            <input
-              type="date"
-              value={dateFilter}
-              onChange={(e) => setDateFilter(e.target.value)}
-              className="bg-transparent text-xs text-slate-200 font-mono focus:outline-none"
-            />
-            {dateFilter && (
+        {/* Date Filter & Status Row */}
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3">
+          {/* Date Filter with Today / All Dates shortcuts */}
+          <div className="flex items-center justify-between sm:justify-start space-x-2">
+            <div className="flex items-center bg-obsidian-900 border border-slate-700 rounded-xl px-2.5 py-1.5 space-x-2 flex-1 sm:flex-initial">
+              <Calendar className="w-4 h-4 text-gold-400 shrink-0" />
+              <input
+                type="date"
+                value={dateFilter}
+                onChange={(e) => setDateFilter(e.target.value)}
+                className="bg-transparent text-xs text-slate-200 font-mono focus:outline-none w-full sm:w-auto"
+              />
+              {dateFilter && (
+                <button
+                  type="button"
+                  onClick={() => setDateFilter('')}
+                  className="text-[10px] text-slate-400 hover:text-red-400 px-1 font-semibold"
+                  title="Clear date filter"
+                >
+                  ✕
+                </button>
+              )}
+            </div>
+
+            <div className="flex items-center space-x-1 shrink-0">
+              <button
+                type="button"
+                onClick={() => setDateFilter(getIndianBusinessDate())}
+                className={`px-2.5 py-1.5 rounded-lg text-xs font-medium border transition ${
+                  dateFilter === getIndianBusinessDate()
+                    ? 'bg-gold-500/20 text-gold-300 border-gold-500/40'
+                    : 'bg-obsidian-900 text-slate-400 border-slate-800 hover:text-slate-200'
+                }`}
+              >
+                Today
+              </button>
               <button
                 type="button"
                 onClick={() => setDateFilter('')}
-                className="text-[10px] text-slate-400 hover:text-red-400 px-1 font-semibold"
-                title="Clear date filter"
+                className={`px-2.5 py-1.5 rounded-lg text-xs font-medium border transition ${
+                  dateFilter === ''
+                    ? 'bg-gold-500/20 text-gold-300 border-gold-500/40'
+                    : 'bg-obsidian-900 text-slate-400 border-slate-800 hover:text-slate-200'
+                }`}
               >
-                ✕
+                All Dates
               </button>
-            )}
+            </div>
           </div>
 
-          <div className="flex items-center space-x-1">
-            <button
-              type="button"
-              onClick={() => setDateFilter(getIndianBusinessDate())}
-              className={`px-2.5 py-1.5 rounded-lg text-xs font-medium border transition ${
-                dateFilter === getIndianBusinessDate()
-                  ? 'bg-gold-500/20 text-gold-300 border-gold-500/40'
-                  : 'bg-obsidian-900 text-slate-400 border-slate-800 hover:text-slate-200'
-              }`}
-            >
-              Today
-            </button>
-            <button
-              type="button"
-              onClick={() => setDateFilter('')}
-              className={`px-2.5 py-1.5 rounded-lg text-xs font-medium border transition ${
-                dateFilter === ''
-                  ? 'bg-gold-500/20 text-gold-300 border-gold-500/40'
-                  : 'bg-obsidian-900 text-slate-400 border-slate-800 hover:text-slate-200'
-              }`}
-            >
-              All Dates
-            </button>
+          {/* Status Chips with Horizontal Touch Scrolling */}
+          <div className="flex items-center space-x-1.5 bg-obsidian-900 p-1 rounded-xl border border-slate-800 overflow-x-auto no-scrollbar shrink-0">
+            {(['ALL', 'WAITING', 'TESTING', 'SENT'] as const).map((st) => (
+              <button
+                key={st}
+                onClick={() => setStatusFilter(st)}
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition ${
+                  statusFilter === st
+                    ? 'bg-gold-500 text-obsidian-900 shadow font-bold'
+                    : 'text-slate-400 hover:text-slate-200'
+                }`}
+              >
+                {st}
+              </button>
+            ))}
           </div>
-        </div>
-
-        {/* Status Chips */}
-        <div className="flex items-center space-x-1.5 bg-obsidian-900 p-1 rounded-xl border border-slate-800">
-          {(['ALL', 'WAITING', 'TESTING', 'SENT'] as const).map((st) => (
-            <button
-              key={st}
-              onClick={() => setStatusFilter(st)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
-                statusFilter === st
-                  ? 'bg-gold-500 text-obsidian-900 shadow font-bold'
-                  : 'text-slate-400 hover:text-slate-200'
-              }`}
-            >
-              {st}
-            </button>
-          ))}
         </div>
       </div>
 
@@ -529,16 +532,17 @@ export default function TesterQueuePage() {
                         <div className="flex space-x-2">
                           <input
                             type="number"
+                            inputMode="decimal"
                             step="any"
                             placeholder="Enter value..."
                             value={valueInputs[req.id] !== undefined ? valueInputs[req.id] : req.testerValue || ''}
                             onChange={(e) => handleValueChange(req.id, e.target.value)}
-                            className="flex-1 bg-obsidian-900 border border-slate-700 rounded-lg px-3 py-2 text-sm font-mono text-slate-100 placeholder-slate-600 focus:outline-none focus:border-gold-400"
+                            className="flex-1 bg-obsidian-900 border border-slate-700 rounded-lg px-3 py-2.5 text-base sm:text-sm font-mono text-slate-100 placeholder-slate-600 focus:outline-none focus:border-gold-400"
                           />
                           <button
                             onClick={() => handleSubmitValue(req.id)}
                             disabled={isSendingId === req.id}
-                            className="py-2 px-4 gold-button rounded-lg text-xs font-bold flex items-center space-x-1.5 shrink-0"
+                            className="py-2.5 px-4 gold-button rounded-lg text-xs font-bold flex items-center space-x-1.5 shrink-0 active:scale-95 transition"
                           >
                             <Send className="w-3.5 h-3.5" />
                             <span>{isSendingId === req.id ? 'Sending...' : 'SEND'}</span>
@@ -588,39 +592,39 @@ export default function TesterQueuePage() {
 
       {/* Direct In-Page Print Report & Slip Modal UI */}
       {activePrintModalId && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-obsidian-950/80 backdrop-blur-md animate-fade-in">
-          <div className="bg-obsidian-900 border border-gold-500/40 rounded-2xl shadow-2xl w-full max-w-4xl h-[90vh] flex flex-col overflow-hidden">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-4 md:p-6 bg-obsidian-950/85 backdrop-blur-md animate-fade-in">
+          <div className="bg-obsidian-900 border-0 sm:border border-gold-500/40 rounded-none sm:rounded-2xl shadow-2xl w-full max-w-4xl h-full sm:h-[90vh] flex flex-col overflow-hidden">
             {/* Modal Header */}
-            <div className="flex items-center justify-between px-5 py-3 border-b border-slate-800 bg-obsidian-850">
-              <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 rounded-lg bg-gold-500/20 border border-gold-500/40 flex items-center justify-center">
-                  <Printer className="w-4 h-4 text-gold-400" />
+            <div className="flex items-center justify-between px-3 sm:px-5 py-2.5 sm:py-3 border-b border-slate-800 bg-obsidian-850">
+              <div className="flex items-center space-x-2.5 sm:space-x-3">
+                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-gold-500/20 border border-gold-500/40 flex items-center justify-center shrink-0">
+                  <Printer className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gold-400" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-bold text-slate-100 flex items-center space-x-2">
+                  <h3 className="text-xs sm:text-sm font-bold text-slate-100 flex items-center space-x-1.5 sm:space-x-2">
                     <span>Print Report &amp; Slip</span>
-                    <span className="text-[10px] px-2 py-0.5 rounded bg-amber-500/15 border border-amber-500/30 text-amber-300 font-mono">
-                      Pre-printed Stationery Format
+                    <span className="text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded bg-amber-500/15 border border-amber-500/30 text-amber-300 font-mono">
+                      Pre-printed Slip
                     </span>
                   </h3>
-                  <p className="text-[11px] text-slate-400">
-                    Preview and print the test certificate directly from your assay workbench.
+                  <p className="text-[10px] sm:text-[11px] text-slate-400 hidden xs:block">
+                    Preview and print the test certificate directly.
                   </p>
                 </div>
               </div>
 
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-1.5 sm:space-x-2">
                 <button
                   type="button"
                   onClick={() => {
                     const printUrl = `${API_BASE_URL}/public/certificates/${activePrintModalId}?mode=preprinted&_t=${Date.now()}`;
                     window.open(printUrl, 'AurumTouchLabPrintSlip', 'width=920,height=750,left=120,top=80');
                   }}
-                  className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold flex items-center space-x-1.5 transition"
+                  className="px-2.5 sm:px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold flex items-center space-x-1 transition"
                   title="Open in new window"
                 >
-                  <ExternalLink className="w-3.5 h-3.5" />
-                  <span>Detach Window</span>
+                  <ExternalLink className="w-3.5 h-3.5 shrink-0" />
+                  <span className="hidden sm:inline">Detach</span>
                 </button>
 
                 <button
