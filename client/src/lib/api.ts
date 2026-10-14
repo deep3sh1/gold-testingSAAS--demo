@@ -14,6 +14,7 @@ const SEED_CUSTOMERS: CustomerDTO[] = [
     id: 'cust-demo-1',
     name: 'Ramesh Sharma',
     phone: '+919876543210',
+    rawPhone: '9876543210',
     jewellerName: 'ABC Jewellers',
     organizationId: 'demo-org',
     branch: 'kalyan',
@@ -24,6 +25,7 @@ const SEED_CUSTOMERS: CustomerDTO[] = [
     id: 'cust-demo-2',
     name: 'Suresh Patil',
     phone: '+919876543211',
+    rawPhone: '9876543211',
     jewellerName: 'Royal Jewellers',
     organizationId: 'demo-org',
     branch: 'kalyan',
@@ -34,6 +36,7 @@ const SEED_CUSTOMERS: CustomerDTO[] = [
     id: 'cust-demo-3',
     name: 'Priya Verma',
     phone: '+919876543212',
+    rawPhone: '9876543212',
     jewellerName: 'R.K. Bullion',
     organizationId: 'demo-org',
     branch: 'kalyaneast',
@@ -49,7 +52,6 @@ const SEED_REQUESTS: TestRequestDTO[] = [
     branch: 'kalyan',
     businessDate: new Date().toISOString().slice(0, 10),
     tokenNumber: 'AU-001',
-    sequenceNumber: 1,
     customerId: 'cust-demo-1',
     customerNameSnapshot: 'Ramesh Sharma',
     jewellerName: 'ABC Jewellers',
@@ -59,6 +61,7 @@ const SEED_REQUESTS: TestRequestDTO[] = [
     weight: 24.500,
     weightUnit: 'g',
     status: 'WAITING',
+    createdBy: 'reception-demo',
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   },
@@ -68,7 +71,6 @@ const SEED_REQUESTS: TestRequestDTO[] = [
     branch: 'kalyan',
     businessDate: new Date().toISOString().slice(0, 10),
     tokenNumber: 'AU-002',
-    sequenceNumber: 2,
     customerId: 'cust-demo-2',
     customerNameSnapshot: 'Suresh Patil',
     jewellerName: 'Royal Jewellers',
@@ -78,6 +80,7 @@ const SEED_REQUESTS: TestRequestDTO[] = [
     weight: 18.250,
     weightUnit: 'g',
     status: 'TESTING',
+    createdBy: 'reception-demo',
     assignedTesterId: 'tester-1',
     assignedTesterName: 'Assay Tester',
     createdAt: new Date(Date.now() - 15 * 60000).toISOString(),
@@ -89,7 +92,6 @@ const SEED_REQUESTS: TestRequestDTO[] = [
     branch: 'kalyan',
     businessDate: new Date().toISOString().slice(0, 10),
     tokenNumber: 'AU-003',
-    sequenceNumber: 3,
     customerId: 'cust-demo-3',
     customerNameSnapshot: 'Priya Verma',
     jewellerName: 'R.K. Bullion',
@@ -99,6 +101,7 @@ const SEED_REQUESTS: TestRequestDTO[] = [
     weight: 8.420,
     weightUnit: 'g',
     status: 'SENT',
+    createdBy: 'reception-demo',
     assignedTesterId: 'tester-1',
     assignedTesterName: 'Assay Tester',
     testerValue: 91.60,
@@ -213,18 +216,19 @@ export const api = {
         role: role as any,
         branch,
         organizationId: 'demo-org',
-        isActive: true,
+        status: 'ACTIVE',
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       };
 
       const mockSession: AuthSessionUser = {
-        id: mockUser.id,
+        userId: mockUser.id,
         name: mockUser.name,
         email: mockUser.email,
         role: mockUser.role,
         branch: mockUser.branch,
         organizationId: mockUser.organizationId,
+        orgCode: 'AU',
       };
 
       return {
@@ -245,7 +249,16 @@ export const api = {
         if (saved) {
           try {
             const parsed = JSON.parse(saved);
-            return { user: parsed, session: parsed };
+            const session: AuthSessionUser = {
+              userId: parsed.id || parsed.userId || 'user-demo',
+              name: parsed.name || 'Demo User',
+              email: parsed.email || 'demo@lab.com',
+              role: parsed.role || 'ORGANIZATION_ADMIN',
+              branch: parsed.branch || 'kalyan',
+              organizationId: parsed.organizationId || 'demo-org',
+              orgCode: parsed.orgCode || 'AU',
+            };
+            return { user: parsed, session };
           } catch {}
         }
       }
@@ -256,11 +269,20 @@ export const api = {
         role: 'ORGANIZATION_ADMIN',
         branch: 'kalyan',
         organizationId: 'demo-org',
-        isActive: true,
+        status: 'ACTIVE',
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       };
-      return { user: fallbackUser, session: fallbackUser as any };
+      const fallbackSession: AuthSessionUser = {
+        userId: fallbackUser.id,
+        name: fallbackUser.name,
+        email: fallbackUser.email,
+        role: fallbackUser.role,
+        branch: fallbackUser.branch,
+        organizationId: fallbackUser.organizationId,
+        orgCode: 'AU',
+      };
+      return { user: fallbackUser, session: fallbackSession };
     }
   },
 
@@ -315,6 +337,7 @@ export const api = {
         id: `cust-${Date.now()}`,
         name: data.name,
         phone: data.phone,
+        rawPhone: data.phone.replace(/[^0-9]/g, ''),
         notes: data.notes,
         organizationId: 'demo-org',
         branch: 'kalyan',
@@ -360,7 +383,7 @@ export const api = {
         branch: data.branch || 'kalyan',
         businessDate: now.toISOString().slice(0, 10),
         tokenNumber: tokenNum,
-        sequenceNumber: seq,
+        createdBy: 'reception-demo',
         customerId: data.customerId || `cust-${Date.now()}`,
         customerNameSnapshot: data.customerName,
         jewellerName: data.jewellerName,
