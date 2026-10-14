@@ -324,19 +324,9 @@ export default function ReceptionDashboardPage() {
                     <a
                       href={`${API_BASE_URL}/public/certificates/${req.id}.pdf`}
                       download={`AurumTouchLab_Assay_${req.tokenNumber}.pdf`}
-                      className="py-2 px-1 text-center bg-obsidian-850 hover:bg-gold-500/15 text-gold-300 border border-gold-500/30 rounded-xl text-[11px] font-bold flex items-center justify-center space-x-1 active:scale-95 transition"
+                      className="w-full py-2 px-1 text-center bg-obsidian-850 hover:bg-gold-500/15 text-gold-300 border border-gold-500/30 rounded-xl text-[11px] font-bold flex items-center justify-center space-x-1 active:scale-95 transition"
                     >
-                      <span>📄 PDF</span>
-                    </a>
-                    <a
-                      href={`https://wa.me/${req.phoneSnapshot.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(
-                        `*AURUM TOUCH LAB ASSAY CERTIFICATE*\n\nCustomer: ${req.customerNameSnapshot}\nToken: ${req.tokenNumber}\nItem: ${req.item} (${req.weight} ${req.weightUnit})\nValue: ${req.testerValue ?? 'In Progress'}\n\nDownload Certificate: ${API_BASE_URL}/public/certificates/${req.id}.pdf`
-                      )}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="py-2 px-1 text-center bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/40 rounded-xl text-[11px] font-bold flex items-center justify-center space-x-1 active:scale-95 transition"
-                    >
-                      <span>💬 WhatsApp</span>
+                      <span>📄 Download PDF Certificate</span>
                     </a>
                   </div>
                 </div>
@@ -355,7 +345,7 @@ export default function ReceptionDashboardPage() {
                     <th className="px-4 py-3.5">Status</th>
                     <th className="px-4 py-3.5">Tester Value</th>
                     <th className="px-4 py-3.5">Time</th>
-                    <th className="px-4 py-3.5 text-right">Certificate & WhatsApp</th>
+                    <th className="px-4 py-3.5 text-right">Certificate</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-800/60">
@@ -430,16 +420,6 @@ export default function ReceptionDashboardPage() {
                           title="Download Digital PDF (with header)"
                         >
                           <span>📄 PDF</span>
-                        </a>
-                        <a
-                          href={`https://wa.me/${req.phoneSnapshot.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(
-                            `*AURUM TOUCH LAB ASSAY CERTIFICATE*\n\nCustomer: ${req.customerNameSnapshot}\nToken: ${req.tokenNumber}\nItem: ${req.item} (${req.weight} ${req.weightUnit})\nValue: ${req.testerValue ?? 'In Progress'}\n\nDownload Certificate: ${API_BASE_URL}/public/certificates/${req.id}.pdf`
-                          )}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center px-2.5 py-1 bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/40 rounded-lg text-[10px] font-semibold transition"
-                        >
-                          <span>💬 WhatsApp</span>
                         </a>
                       </td>
                     </tr>

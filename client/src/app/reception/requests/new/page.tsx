@@ -301,7 +301,7 @@ export default function NewTestRequestPage() {
           <div>
             <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5 flex items-center space-x-1.5">
               <Phone className="w-3.5 h-3.5 text-gold-400" />
-              <span>Customer WhatsApp Phone</span>
+              <span>Customer Contact Phone</span>
             </label>
             <div className="relative">
               <input
@@ -315,7 +315,7 @@ export default function NewTestRequestPage() {
               />
             </div>
             <p className="text-[11px] text-slate-500 mt-1">
-              WhatsApp notifications will be dispatched to this number upon test completion.
+              Used for token verification and customer record keeping.
             </p>
           </div>
 

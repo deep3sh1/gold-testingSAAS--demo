@@ -193,7 +193,7 @@ export default function TesterQueuePage() {
 
       setRequests((prev) => prev.map((r) => (r.id === requestId ? updated : r)));
       setNotificationAlert({
-        msg: `✓ Result ${num}% sent to customer via WhatsApp and print slip opened!`,
+        msg: `✓ Result ${num}% saved and print slip ready!`,
         type: 'success',
       });
 
@@ -544,8 +544,8 @@ export default function TesterQueuePage() {
                             disabled={isSendingId === req.id}
                             className="py-2.5 px-4 gold-button rounded-lg text-xs font-bold flex items-center space-x-1.5 shrink-0 active:scale-95 transition"
                           >
-                            <Send className="w-3.5 h-3.5" />
-                            <span>{isSendingId === req.id ? 'Sending...' : 'SEND'}</span>
+                            <Printer className="w-3.5 h-3.5" />
+                            <span>{isSendingId === req.id ? 'Saving...' : 'SUBMIT & PRINT'}</span>
                           </button>
                         </div>
                       </div>

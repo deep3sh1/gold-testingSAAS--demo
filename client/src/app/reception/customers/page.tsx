@@ -82,7 +82,7 @@ export default function CustomersPage() {
             Registered Customers & Jewellers
           </h1>
           <p className="text-xs sm:text-sm text-slate-400 mt-0.5">
-            Persistent customer database with normalized WhatsApp contact numbers.
+            Persistent customer and jeweller accounts database.
           </p>
         </div>
 
@@ -196,7 +196,7 @@ export default function CustomersPage() {
 
               <div>
                 <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">
-                  WhatsApp Phone Number
+                  Contact Phone Number
                 </label>
                 <input
                   type="tel"

@@ -43,7 +43,7 @@ const TERMINALS: Record<TerminalRole, TerminalConfig> = {
     label: 'Assay Tester',
     placeholder: 'Enter username (e.g. tester.kalyan)',
     roleBadge: 'Assay Tester',
-    subtitle: 'Testing queue, purity values, WhatsApp & print slip',
+    subtitle: 'Testing queue, purity values & assay print slip',
     icon: FlaskConical,
     accentColor: 'text-sky-400 border-sky-500/30 bg-sky-500/10',
   },

@@ -11,14 +11,8 @@ export class WhatsAppService {
     if (provider) {
       this.provider = provider;
     } else {
-      // Default strictly to MockWhatsAppProvider for safe isolated demo mode
-      if (config.whatsapp.provider === 'cloud_api' && config.whatsapp.accessToken) {
-        this.provider = new MetaCloudApiWhatsAppProvider();
-      } else if (config.whatsapp.provider === 'msg91' && config.whatsapp.msg91?.authKey) {
-        this.provider = new Msg91WhatsAppProvider();
-      } else {
-        this.provider = new MockWhatsAppProvider();
-      }
+      // Demo mode safeguard: Strictly use MockWhatsAppProvider so zero external gateways are ever touched
+      this.provider = new MockWhatsAppProvider();
     }
   }
 
