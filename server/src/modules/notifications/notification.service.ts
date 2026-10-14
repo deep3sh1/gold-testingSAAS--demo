@@ -53,10 +53,7 @@ export class NotificationService {
 
     try {
       // 2. Attempt WhatsApp delivery via abstracted provider (with PDF Certificate link)
-      let baseUrl = process.env.PUBLIC_REPORT_URL || config.apiBaseUrl || 'https://lab-saas-server.vercel.app';
-      if (!baseUrl || baseUrl.includes('localhost') || baseUrl.includes('127.0.0.1') || baseUrl.includes('lab-saas-client')) {
-        baseUrl = 'https://lab-saas-server.vercel.app';
-      }
+      const baseUrl = process.env.PUBLIC_REPORT_URL || config.apiBaseUrl || 'http://localhost:4000';
       const branchParam = params.branch ? `?branch=${encodeURIComponent(params.branch)}` : '';
       const documentUrl = `${baseUrl.replace(/\/+$/, '')}/api/v1/public/certificates/${params.testRequestId}.pdf${branchParam}`;
       const documentFilename = `Assay_Certificate_${params.tokenNumber}.pdf`;

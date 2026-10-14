@@ -33,9 +33,6 @@ export async function connectDatabase(uri: string = config.mongoUri): Promise<ty
       console.log(`[MongoDB] Running in Vercel demo mode without external database.`);
       return mongoose;
     }
-    if (process.env.NODE_ENV === 'production') {
-      throw error;
-    }
     console.log(`[MongoDB] Starting zero-config in-memory MongoDB development database...`);
   }
 

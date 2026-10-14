@@ -14,13 +14,11 @@ export const config = {
   env: process.env.NODE_ENV || 'development',
   port: parseInt(process.env.PORT || '4000', 10),
   clientUrl: process.env.CLIENT_URL || 'http://localhost:3000',
-  apiBaseUrl: (process.env.PUBLIC_REPORT_URL)
-    ? process.env.PUBLIC_REPORT_URL
-    : (process.env.API_BASE_URL && !process.env.API_BASE_URL.includes('localhost') && !process.env.API_BASE_URL.includes('127.0.0.1'))
-    ? process.env.API_BASE_URL
-    : (process.env.PUBLIC_API_URL && !process.env.PUBLIC_API_URL.includes('localhost') && !process.env.PUBLIC_API_URL.includes('127.0.0.1'))
-    ? process.env.PUBLIC_API_URL
-    : 'https://lab-saas-server.vercel.app',
+  apiBaseUrl:
+    process.env.PUBLIC_REPORT_URL ||
+    process.env.API_BASE_URL ||
+    process.env.PUBLIC_API_URL ||
+    'http://localhost:4000',
   mongoUri: process.env.MONGODB_URI || 'mongodb://localhost:27017/aurum_demo_db',
   jwtSecret: process.env.JWT_SECRET || 'aurum-demo-super-secret-jwt-key-2026',
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || '7d',

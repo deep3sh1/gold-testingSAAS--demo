@@ -67,6 +67,7 @@ export function createApp(): express.Application {
   apiRouter.use('/audit', auditRoutes);
   apiRouter.use('/machine', machineRoutes);
 
+  app.use('/public/certificates', publicCertificateRoutes);
   app.use('/api/v1', apiRouter);
 
   // Centralized Error Handling Middleware

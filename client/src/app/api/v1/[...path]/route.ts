@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 const BACKEND_URL = (
   process.env.API_URL ||
   process.env.NEXT_PUBLIC_API_URL?.replace(/\/api\/v1\/?$/, '') ||
-  'https://lab-saas-server.vercel.app'
+  'http://127.0.0.1:4000'
 ).replace(/\/+$/, '');
 
 async function proxy(request: NextRequest, { params }: { params: { path: string[] } }) {
@@ -18,7 +18,6 @@ async function proxy(request: NextRequest, { params }: { params: { path: string[
       headers.set(key, value);
     }
   });
-  headers.set('origin', 'https://lab-saas-client.vercel.app');
 
   let body: ArrayBuffer | undefined = undefined;
   if (request.method !== 'GET' && request.method !== 'HEAD') {

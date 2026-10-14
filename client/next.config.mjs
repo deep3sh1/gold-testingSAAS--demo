@@ -1,7 +1,8 @@
 const apiTarget =
   process.env.API_URL ||
   process.env.NEXT_PUBLIC_API_BASE_URL ||
-  (process.env.NODE_ENV === 'production' ? 'https://lab-saas-server.vercel.app' : 'http://localhost:4000');
+  process.env.NEXT_PUBLIC_API_URL?.replace(/\/api\/v1\/?$/, '') ||
+  'http://localhost:4000';
 
 const nextConfig = {
   reactStrictMode: true,

@@ -42,7 +42,7 @@ namespace WinFTMCaptureAgent
 
         public ConfigData()
         {
-            serverUrl = "https://lab-saas-server.vercel.app";
+            serverUrl = "http://localhost:4000";
             branch = "kalyan";
             stationId = "WINFTM-DESKTOP-01";
             lockRegion = false;
@@ -580,14 +580,6 @@ namespace WinFTMCaptureAgent
                     {
                         candidateBases.Add(primaryBaseUrl);
                     }
-                    if (!candidateBases.Contains("https://lab-saas-server.vercel.app"))
-                    {
-                        candidateBases.Add("https://lab-saas-server.vercel.app");
-                    }
-                    if (!candidateBases.Contains("https://lab-saas-client.vercel.app"))
-                    {
-                        candidateBases.Add("https://lab-saas-client.vercel.app");
-                    }
                     if (primaryBaseUrl != null && primaryBaseUrl.Contains("localhost"))
                     {
                         candidateBases.Insert(0, "http://localhost:4000");
@@ -869,14 +861,6 @@ namespace WinFTMCaptureAgent
                 if (!string.IsNullOrEmpty(primaryBaseUrl) && !primaryBaseUrl.Contains("localhost"))
                 {
                     candidateBases.Add(primaryBaseUrl);
-                }
-                if (!candidateBases.Contains("https://lab-saas-server.vercel.app"))
-                {
-                    candidateBases.Add("https://lab-saas-server.vercel.app");
-                }
-                if (!candidateBases.Contains("https://lab-saas-client.vercel.app"))
-                {
-                    candidateBases.Add("https://lab-saas-client.vercel.app");
                 }
                 if (primaryBaseUrl != null && primaryBaseUrl.Contains("localhost"))
                 {
